@@ -1,0 +1,39 @@
+# dependencies
+/node_modules
+
+# production build
+/build
+/dist
+
+# misc
+.DS_Store
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# testing
+/coverage
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# editor directories and files
+.vscode
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# parcel-bundler cache
+.cache/
+
+# Mac system files
+*.DS_Store
+
+# Optional: ignore local development tools or custom output
+*.log

@@ -1,0 +1,22 @@
+{
+  "about": {
+    "type": "static",
+    "file": "./src/pages/About.jsx"
+  },
+  "contact": {
+    "type": "static",
+    "file": "./src/pages/Contact.jsx"
+  },
+  "dashboard": {
+    "type": "browser",
+    "url": "http://localhost:3000/dashboard"
+  },
+  "home": {
+    "type": "static",
+    "file": "./src/pages/Home.jsx"
+  },
+  "products": {
+    "type": "static",
+    "file": "./src/pages/Products.jsx"
+  }
+}
