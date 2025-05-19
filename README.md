@@ -68,9 +68,11 @@ You can extend this via the cdnMap inside render-all.js.
 
 6. Install Dependencies
 
-# npm install
+#
+ npm install
 7. Generate Page Config File
-# npm run generate:config
+#
+ npm run generate:config
 # This creates a pageConfig.json file like:
 ###
 {
