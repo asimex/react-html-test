@@ -1,70 +1,85 @@
-# Getting Started with Create React App
+# 🚀 React Page HTML Exporter with Static + Dynamic Rendering
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project allows you to render multiple React pages into standalone `.html` files using either:
 
-## Available Scripts
+- `renderToStaticMarkup` (for static pages without hooks)
+- `Puppeteer` (for dynamic pages with `useEffect`, `useState`, etc.)
 
-In the project directory, you can run:
+These HTML files can then be loaded directly into **GrapesJS** using the Pages Manager.
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## ✅ Step-by-Step Setup
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 1. Clone this repo
 
-### `npm test`
+```bash
+git clone https://github.com/your-repo/html-exporter
+cd html-exporter
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+2. Inject generatePageConfig.js
 
-### `npm run build`
+This script scans your /src/pages/ folder and determines which pages:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#  **Do not use React hooks** (rendered statically)
+    
+#  **Do use hooks** (require browser-based rendering via Puppeteer)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+3. Inject render-all.js
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+This script reads pageConfig.json and dynamically:
 
-### `npm run eject`
+#  Renders static pages using react-dom/server
+    
+#   Renders dynamic pages using Puppeteer
+    
+#  Saves all .html files into /dist
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+4. Inject Babel Config
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Ensure Babel supports:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+#   JSX
+    
+#   ESNext syntax
+    
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Using:
 
-## Learn More
+#   @babel/register
+    
+#  @babel/preset-env
+    
+#   @babel/preset-react
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+ 5. Auto-scan package.json and inject CDN links
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+The render-all.js script automatically:
 
-### Code Splitting
+#   Parses package.json
+    
+#   Injects appropriate CDN  tags for popular UI frameworks like:
+    
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+# <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/antd@4.24.13/dist/antd.min.css">
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+You can extend this via the cdnMap inside render-all.js.
 
-### Making a Progressive Web App
+6. Install Dependencies
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+# npm install
+7. Generate Page Config File
+# npm run generate:config
+# This creates a pageConfig.json file like:
+###
+{
+  "home": { "type": "static", "file": "./src/pages/Home.jsx" },
+  "dashboard": { "type": "browser", "url": "http://localhost:3000/dashboard" }
+}
+8. Render All Pages
+## 
+npm run start      # In one terminal (React dev server)
+npm run render     # In another terminal (exports all pages to /dist)
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+9. Use /dist/*.html in GrapesJS
